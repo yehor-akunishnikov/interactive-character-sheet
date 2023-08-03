@@ -68,7 +68,6 @@ export default function App() {
             <Thead>
               <Tr>
                 <Th>Stat</Th>
-                <Th></Th>
                 <Th isNumeric>Value</Th>
               </Tr>
             </Thead>
@@ -76,9 +75,6 @@ export default function App() {
               {Object.keys(stats).map((statName) => {
                 return (
                   <Tr>
-                    <Td display="flex" alignItems="center">
-                      <span>{statName}</span>
-                    </Td>
                     <Td>
                       <HStack spacing="2">
                         <Button
@@ -103,6 +99,7 @@ export default function App() {
                         >
                           -
                         </Button>
+                        <span>{statName}</span>
                       </HStack>
                     </Td>
                     <Td isNumeric>{stats[statName]}</Td>

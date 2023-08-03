@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './style.css';
 
 import {
@@ -26,6 +26,16 @@ export default function App() {
     Luck: 5,
   });
   const [points, setPoints] = useState(5);
+  const [isCharacterCreated, setIsCharacterCreated] = useState(false);
+
+  useEffect(() => {
+    const statsFromStorage = localStorage.getItem('characterStats');
+
+    if (statsFromStorage) {
+      setStats(JSON.parse(statsFromStorage));
+      setIsCharacterCreated(true);
+    }
+  }, []);
 
   const updateStat = (statName, valueToPatch) => {
     const newStats = { ...stats };
@@ -54,10 +64,15 @@ export default function App() {
 
   const createCharacter = () => {
     localStorage.setItem('characterStats', JSON.stringify(stats));
+    setIsCharacterCreated(true);
   };
 
   const isCreateButtonDisabled = () => {
-    return points !== 0;
+    return points !== 0 || isCharacterCreated;
+  };
+
+  const isFreePointsCounterShown = () => {
+    return !isCharacterCreated;
   };
 
   return (
@@ -77,28 +92,32 @@ export default function App() {
                   <Tr>
                     <Td>
                       <HStack spacing="2">
-                        <Button
-                          onClick={() => updateStat(statName, 1)}
-                          isDisabled={isCounterButtonDisabled(
-                            stats[statName],
-                            '+'
-                          )}
-                          size="xs"
-                          colorScheme="teal"
-                        >
-                          +
-                        </Button>
-                        <Button
-                          onClick={() => updateStat(statName, -1)}
-                          isDisabled={isCounterButtonDisabled(
-                            stats[statName],
-                            '-'
-                          )}
-                          size="xs"
-                          colorScheme="red"
-                        >
-                          -
-                        </Button>
+                        {!isCharacterCreated && (
+                          <>
+                            <Button
+                              onClick={() => updateStat(statName, 1)}
+                              isDisabled={isCounterButtonDisabled(
+                                stats[statName],
+                                '+'
+                              )}
+                              size="xs"
+                              colorScheme="teal"
+                            >
+                              +
+                            </Button>
+                            <Button
+                              onClick={() => updateStat(statName, -1)}
+                              isDisabled={isCounterButtonDisabled(
+                                stats[statName],
+                                '-'
+                              )}
+                              size="xs"
+                              colorScheme="red"
+                            >
+                              -
+                            </Button>
+                          </>
+                        )}
                         <span>{statName}</span>
                       </HStack>
                     </Td>
@@ -107,11 +126,14 @@ export default function App() {
                 );
               })}
             </Tbody>
-            <TableCaption m="0">Free points left: {points}</TableCaption>
+            {isFreePointsCounterShown() && (
+              <TableCaption m="0">Free points left: {points}</TableCaption>
+            )}
           </Table>
         </TableContainer>
       </Box>
       <Button
+        onClick={() => createCharacter()}
         isDisabled={isCreateButtonDisabled()}
         size="md"
         colorScheme="teal"

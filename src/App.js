@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import './style.css';
 
 import {
@@ -17,16 +18,17 @@ import {
 
 export default function App() {
   const [stats, setStats] = useState({
-    Strength: 5,
-    Charisma: 5,
-    Endurance: 5,
-    Intelligence: 5,
-    Agility: 5,
-    Perception: 5,
-    Luck: 5,
+    Strength: 0,
+    Charisma: 0,
+    Endurance: 0,
+    Intelligence: 0,
+    Agility: 0,
+    Perception: 0,
+    Luck: 0,
   });
-  const [points, setPoints] = useState(5);
+  const [points, setPoints] = useState(28);
   const [isCharacterCreated, setIsCharacterCreated] = useState(false);
+  const [isSelectedOrigin, setIsSelectedOrigin] = useState(false);
 
   useEffect(() => {
     const statsFromStorage = localStorage.getItem('characterStats');
@@ -39,11 +41,15 @@ export default function App() {
 
   const updateStat = (statName, valueToPatch) => {
     const newStats = { ...stats };
+    const newStatValue = newStats[statName] + valueToPatch;
 
-    newStats[statName] = newStats[statName] + valueToPatch;
+    newStats[statName] = newStatValue;
     setPoints(points - valueToPatch);
-
     setStats(newStats);
+
+    if (newStatValue === 10) {
+      setIsSelectedOrigin(true);
+    }
   };
 
   const isCounterButtonDisabled = (statValue, buttonType) => {
@@ -56,6 +62,10 @@ export default function App() {
     }
 
     if (points === 0 && buttonType === '+') {
+      return true;
+    }
+
+    if (isSelectedOrigin && statValue === 9 && buttonType === '+') {
       return true;
     }
 

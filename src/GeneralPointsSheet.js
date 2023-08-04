@@ -69,7 +69,6 @@ export default function GeneralPointsSheet({
     setPoints(points - valueToPatch);
     setStats(newStats);
 
-    console.log(newStats);
     setIsSelectedOrigin(
       Object.keys(newStats).some(
         (statsItemName) => newStats[statsItemName] === 10

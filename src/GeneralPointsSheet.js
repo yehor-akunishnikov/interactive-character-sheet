@@ -69,9 +69,12 @@ export default function GeneralPointsSheet({
     setPoints(points - valueToPatch);
     setStats(newStats);
 
-    if (newStatValue === 10) {
-      setIsSelectedOrigin(true);
-    }
+    console.log(newStats);
+    setIsSelectedOrigin(
+      Object.keys(newStats).some(
+        (statsItemName) => newStats[statsItemName] === 10
+      )
+    );
   };
 
   const isCounterButtonDisabled = (statValue, buttonType) => {

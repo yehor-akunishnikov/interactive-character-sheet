@@ -109,7 +109,7 @@ function Intelligence() {
       <VStack spacing="2" alignItems="flex-start">
         <p>
           <Badge colorScheme="blue">Each 5 points</Badge> of intelligence grant
-          access to new teer of magic (spells should be learned 2 spells default
+          access to new tier of magic (spells should be learned 2 spells default
           pool, learning requires direct intelligence check).
         </p>
         <Divider />
@@ -130,7 +130,7 @@ function Intelligence() {
         <Divider />
         <Box>
           <p>
-            <Badge colorScheme="blue">1 Teer spels</Badge>
+            <Badge colorScheme="blue">1 Tier spells</Badge>
           </p>
           <ul>
             <li>
@@ -158,17 +158,17 @@ function Intelligence() {
         <Divider />
         <Box>
           <p>
-            <Badge colorScheme="blue">2 Teer spells</Badge>
+            <Badge colorScheme="blue">2 Tier spells</Badge>
           </p>
           <ul>
             <li>
               Killing curse - enemy dies after 3 rounds{' '}
-              <Badge colorScheme="blue">15MP</Badge>.
+              <Badge colorScheme="blue">10MP</Badge>.
             </li>
             <li>
               Fiendfyre - summons living fire, that strikes all enemys at the
-              start of the each round. Deals 3 damage.{' '}
-              <Badge colorScheme="blue">15 MP</Badge>.
+              start of the each round. Deals 3 damage to each.{' '}
+              <Badge colorScheme="blue">8 MP</Badge>.
             </li>
             <li>
               Mana vampirism - you can finish enemy if his HP is 20% or lower

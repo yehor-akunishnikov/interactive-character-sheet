@@ -97,10 +97,6 @@ export default function GeneralPointsSheet({
     return points !== 0 || isCharacterCreated;
   };
 
-  const getStatDescription = () => {
-    return <StatDescription statName={modalCurrentStat} />;
-  };
-
   return (
     <Box p="5">
       <Box border="1px" borderColor="gray.200" mb="5">
@@ -183,7 +179,9 @@ export default function GeneralPointsSheet({
         <ModalContent>
           <ModalHeader>{modalCurrentStat}</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>{getStatDescription()}</ModalBody>
+          <ModalBody>
+            <StatDescription statName={modalCurrentStat} />
+          </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close

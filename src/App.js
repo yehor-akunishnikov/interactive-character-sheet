@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { Button } from '@chakra-ui/react';
+
 import './style.css';
 
 import GeneralPointsSheet from './GeneralPointsSheet.js';
@@ -12,8 +14,24 @@ export default function App() {
     <>
       <GeneralPointsSheet
         isCharacterCreated={isCharacterCreated}
-        onCharacterCreation={() => setIsCharacterCreated(true)}
+        onCharacterCreation={() => {
+          setIsCharacterCreated(true);
+        }}
       />
+      {isCharacterCreated && (
+        <Button
+          size="xs"
+          colorScheme="blue"
+          position="fixed"
+          bottom="5px"
+          left="5px"
+          onClick={() => {
+            console.log(localStorage.getItem('characterData'));
+          }}
+        >
+          Export character data
+        </Button>
+      )}
       <DetailedStatsSheet />
     </>
   );

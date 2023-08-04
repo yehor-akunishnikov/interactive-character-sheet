@@ -26,6 +26,8 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
+import { Input } from '@chakra-ui/react';
+
 import StatDescription from './StatDescription.js';
 
 export default function GeneralPointsSheet({
@@ -44,13 +46,17 @@ export default function GeneralPointsSheet({
   const [points, setPoints] = useState(28);
   const [isSelectedOrigin, setIsSelectedOrigin] = useState(false);
   const [modalCurrentStat, setModalCurrentStat] = useState(null);
+  const [characterName, setCharacterName] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
-    const statsFromStorage = localStorage.getItem('characterStats');
+    const characterDataFromStorage = localStorage.getItem('characterData');
 
-    if (statsFromStorage) {
-      setStats(JSON.parse(statsFromStorage));
+    if (characterDataFromStorage) {
+      const characterData = JSON.parse(characterDataFromStorage);
+
+      setStats(characterData.stats);
+      setCharacterName(characterData.characterName);
       onCharacterCreation();
     }
   }, []);
@@ -89,12 +95,18 @@ export default function GeneralPointsSheet({
   };
 
   const createCharacter = () => {
-    localStorage.setItem('characterStats', JSON.stringify(stats));
     onCharacterCreation();
+    localStorage.setItem(
+      'characterData',
+      JSON.stringify({
+        stats,
+        characterName,
+      })
+    );
   };
 
   const isCreateButtonDisabled = () => {
-    return points !== 0 || isCharacterCreated;
+    return points !== 0 || !characterName;
   };
 
   return (
@@ -109,6 +121,23 @@ export default function GeneralPointsSheet({
               </Tr>
             </Thead>
             <Tbody>
+              <Tr>
+                <Td colSpan="2">
+                  <Input
+                    type="text"
+                    variant="filled"
+                    placeholder="Character name"
+                    value={characterName}
+                    isDisabled={isCharacterCreated}
+                    color="teal"
+                    placeholder="Character Name"
+                    _placeholder={{ color: 'inherit' }}
+                    onChange={(event) => {
+                      setCharacterName(event.target.value);
+                    }}
+                  />
+                </Td>
+              </Tr>
               {Object.keys(stats).map((statName) => {
                 return (
                   <Tr key={statName}>
